@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [name, setName] = useState("Yusril");
+  const [input, setInput] = useState(null);
+
+  const handleChangeName = event => {
+    event.preventDefault();
+    setName(input);
+    setInput(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="Container">
+      <h1> Hello, {name} Selamat Siang ! </h1>
+      <form>
+        <input onChange={event => setInput(event.target.value)} value={input} />
+        <button onClick={event => handleChangeName(event)}> Submit </button>
+      </form>
     </div>
   );
 }
