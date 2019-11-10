@@ -1,52 +1,54 @@
-# what is Hooks ?
+# Use Effect (Component Life Cycle at React Hooks)
 
-Hooks is a additional features that we can use the state and other life cycle component in functional component without declare a class component.
+## Cheatsheet
 
-## How to Use Hooks
-
-1. import `useState` from react library like this ..
+1. Component Did Mount
 
 ```javascript
-import React, { useState } from "react";
+//Class
+componentDidMount() {
+    console.log('I just mounted!');
+}
+
+//Hooks
+useEffect(() => {
+    console.log('I just mounted!');
+}, [])
+
 ```
 
-2. declare `state` just like declare the variables like this :
+2. Component Will UnMount
 
 ```javascript
-const [name, setName] = useState("Yusril");
-const [input, setInput] = useState(null);
+//Class
+componentWillUnmount() {
+    console.log('I am unmounting');
+}
+
+//Hooks
+useEffect(() => {
+    return () => console.log('I am unmounting');
+}, [])
+
 ```
 
-3. How to call the state :
+3. Component Will Receive Props
 
 ```javascript
-  ...
-      <h1> Hello, {name} Selamat Siang ! </h1>
-  ...
+//Class
+componentWillReceiveProps(nextProps) {
+    if (nextProps.count !== this.props.count) {
+        console.log('count changed', nextProps.count);
+    }
+}
+
+//Hooks
+useEffect(() => {
+    console.log('count changed', props.count);
+}, [props.count])
+
 ```
 
-4. How to update the state :
+## For More Documentation and Information about `useEffect`
 
-```javascript
-  ...
-    const handleChangeName = event => {
-    event.preventDefault();
-    setName(input);
-    setInput(null);
-  };
-  ...
-  ...
-    <input onChange={event => setInput(event.target.value)} value={input} />
-  ...
-```
-
-4. How to update the state by using previous state:
-
-```javascript
-  ...
-        <h2> You Clicked {count} </h2>
-        <button onClick={() => setCount(prevCount => prevCount + 1)}>
-          Count
-        </button>
-  ...
-```
+`https://reactjs.org/docs/hooks-effect.html`

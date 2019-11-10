@@ -1,37 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./App.css";
 
-function App() {
-  const [name, setName] = useState("Yusril");
+const App = () => {
   const [input, setInput] = useState(null);
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState(false);
 
-  const handleChangeName = event => {
-    event.preventDefault();
-    setName(input);
-    setInput(null);
-  };
+  useEffect(() => {
+    //hooks lifecycle
+    console.log("use effect active");
+    const fetchUser = async () => {
+      await axios({
+        method: "GET",
+        url: `https://jsonplaceholder.typicode.com/users?username=${input}`
+      })
+        .then(response => {
+          setUser(response.data[0]);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+
+    fetchUser();
+  }, [input]);
 
   return (
     <div className="Container">
-      <div>
-        <h1> Hello, {name} Selamat Siang ! </h1>
-        <form>
-          <input
-            onChange={event => setInput(event.target.value)}
-            value={input}
-          />
-          <button onClick={event => handleChangeName(event)}> Submit </button>
-        </form>
-      </div>
-      <div>
-        <h2> You Clicked {count} </h2>
-        <button onClick={() => setCount(prevCount => prevCount + 1)}>
-          Count
-        </button>
-      </div>
+      <input
+        type="search"
+        onChange={event => setInput(event.target.value)}
+        value={input}
+      />
+
+      {user ? (
+        <div>
+          <h3> {user.email} </h3>
+          <h3> {user.name} </h3>
+        </div>
+      ) : (
+        <div>
+          <h3> User not Found </h3>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
