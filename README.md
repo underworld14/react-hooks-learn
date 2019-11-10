@@ -39,3 +39,14 @@ const [input, setInput] = useState(null);
     <input onChange={event => setInput(event.target.value)} value={input} />
   ...
 ```
+
+4. How to update the state by using previous state:
+
+```javascript
+  ...
+        <h2> You Clicked {count} </h2>
+        <button onClick={() => setCount(prevCount => prevCount + 1)}>
+          Count
+        </button>
+  ...
+```
